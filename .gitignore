@@ -28,3 +28,21 @@ Homestead.json
 .env.production
 .phpactor.json
 auth.json
+
+# Laravel sail
+
+/.phpunit.cache
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/auth.json
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+
+# IDE settings
+/.idea/

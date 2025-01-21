@@ -5,10 +5,10 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Observers\CompanyObserver;
+use App\Observers\NoticeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
-#[ObservedBy([CompanyObserver::class])]
+#[ObservedBy([NoticeObserver::class])]
 /**
  * Class Notice
  *
@@ -52,4 +52,32 @@ class Notice extends Model
 		'crm',
 		'budget'
 	];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('withCompany', function ($query) {
+            $query->with('company');
+        });
+        static::addGlobalScope('withStatus', function ($query) {
+            $query->with('status');
+        });
+        static::addGlobalScope('withNoticesButton', function ($query) {
+            $query->with('noticesButton');
+        });
+    }
+
+    public function company(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Company::class, 'id', 'company_id');
+    }
+
+    public function status(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Status::class, 'id', 'status_id');
+    }
+
+    public function noticesButton(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(NoticesButton::class, 'id', 'notices_button_id');
+    }
 }

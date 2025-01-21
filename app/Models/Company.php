@@ -37,4 +37,24 @@ class Company extends Model
 		'status_id',
 		'name'
 	];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('withUser', function ($query) {
+            $query->with('user');
+        });
+        static::addGlobalScope('withStatus', function ($query) {
+            $query->with('status');
+        });
+    }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function status(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Status::class, 'id', 'status_id');
+    }
 }

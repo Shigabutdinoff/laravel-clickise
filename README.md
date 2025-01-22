@@ -66,8 +66,8 @@
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/Shigabutdinoff/clickise.git
-cd clickise
+git clone https://github.com/Shigabutdinoff/laravel-clickise.git
+cd laravel-clickise
 ```
 
 ### 2. Автоматическая настройка

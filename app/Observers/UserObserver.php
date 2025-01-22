@@ -27,7 +27,9 @@ class UserObserver
      */
     public function deleted(User $user): void
     {
-        //
+        $user->load('companies')->getRelation('companies')->each(function ($companies) {
+            $companies->delete();
+        });
     }
 
     /**

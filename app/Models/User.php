@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Observers\UserObserver;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,6 +24,7 @@ use Illuminate\Notifications\Notifiable;
  *
  * @package App\Models
  */
+#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -59,5 +62,10 @@ class User extends Authenticatable
 //            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function companies(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Company::class, 'user_id', 'id');
     }
 }

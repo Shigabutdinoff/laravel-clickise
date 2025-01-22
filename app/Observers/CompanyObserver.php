@@ -19,7 +19,13 @@ class CompanyObserver
      */
     public function updated(Company $company): void
     {
-        //
+        $status = $company->status_id;
+        if ($status === 2 || $status === 3 ) {
+            $company->load('notices')->getRelation('notices')->each(function ($notice) use ($status) {
+                $notice->status_id = $status;
+                $notice->save();
+            });
+        }
     }
 
     /**

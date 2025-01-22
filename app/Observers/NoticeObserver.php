@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\Company;
 use App\Models\Notice;
 
 class NoticeObserver
@@ -11,7 +12,9 @@ class NoticeObserver
      */
     public function created(Notice $notice): void
     {
-        //
+        if ($notice->status_id === 1) {
+            $notice->load('company')->getRelation('company')->update(['status_id' => $notice->status_id]);
+        }
     }
 
     /**

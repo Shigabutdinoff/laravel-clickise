@@ -57,4 +57,9 @@ class Company extends Model
     {
         return $this->hasOne(Status::class, 'id', 'status_id');
     }
+
+    public function notices(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Notice::class, 'company_id', 'id');
+    }
 }
